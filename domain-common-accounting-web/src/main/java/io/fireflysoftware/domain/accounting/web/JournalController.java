@@ -16,9 +16,9 @@
 
 package io.fireflysoftware.domain.accounting.web;
 
-import io.fireflysoftware.domain.accounting.core.journal.CorePort;
 import io.fireflysoftware.domain.accounting.core.journal.InterestJournal;
 import io.fireflysoftware.domain.accounting.core.journal.JournalRequest;
+import io.fireflysoftware.domain.accounting.core.journal.JournalService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,19 +32,19 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/api/v1/journals")
 public class JournalController {
-    private final CorePort port;
+    private final JournalService journals;
 
-    public JournalController(CorePort port) {
-        this.port = port;
+    public JournalController(JournalService journals) {
+        this.journals = journals;
     }
 
     @PostMapping
     public Mono<InterestJournal> post(@RequestBody JournalRequest request) {
-        return port.postInterest(request.businessDate(), request.amount(), request.currency(), request.reference());
+        return journals.post(request);
     }
 
     @GetMapping("/{businessDate}")
     public Mono<InterestJournal> read(@PathVariable LocalDate businessDate) {
-        return port.findInterest(businessDate);
+        return journals.find(businessDate);
     }
 }
