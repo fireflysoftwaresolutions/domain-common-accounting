@@ -1,71 +1,85 @@
 openapi: 3.0.3
 info:
   title: Domain Accounting API
-  version: 1.0.0
-  contact:
-    name: Firefly Software Foundation
-    email: dev@fireflysoftware.io
+  version: 26.10.4
 paths:
-  /api/v1/journals/{id}:
-    get:
-      tags: [Journals]
-      operationId: read
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema: {type: string, format: uuid}
-      responses:
-        "200":
-          description: Found
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/RecordView"
-    put:
-      tags: [Journals]
-      operationId: update
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema: {type: string, format: uuid}
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/RecordView"
-      responses:
-        "200":
-          description: Updated
-    delete:
-      tags: [Journals]
-      operationId: remove
-      parameters:
-        - name: id
-          in: path
-          required: true
-          schema: {type: string, format: uuid}
-      responses:
-        "204":
-          description: Removed
   /api/v1/journals:
     post:
       tags: [Journals]
-      operationId: create
+      operationId: postJournal
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/RecordView"
+              $ref: "#/components/schemas/JournalRequest"
       responses:
-        "201":
-          description: Created
+        "200":
+          description: Journal posted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterestJournal"
+  /api/v1/journals/{businessDate}:
+    get:
+      tags: [Journals]
+      operationId: readJournal
+      parameters:
+        - name: businessDate
+          in: path
+          required: true
+          schema: {type: string, format: date}
+      responses:
+        "200":
+          description: Journal for the business date
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/InterestJournal"
+  /api/v1/accounts/{id}:
+    get:
+      tags: [Accounts]
+      operationId: readAccount
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: {type: string, format: uuid}
+      responses:
+        "200":
+          description: Ledger account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LedgerAccountView"
 components:
   schemas:
-    RecordView:
+    JournalRequest:
+      type: object
+      properties:
+        businessDate:
+          type: string
+          format: date
+        amount:
+          type: number
+        currency:
+          type: string
+        reference:
+          type: string
+    InterestJournal:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        businessDate:
+          type: string
+          format: date
+        amount:
+          type: number
+        currency:
+          type: string
+    LedgerAccountView:
       type: object
       properties:
         id:
