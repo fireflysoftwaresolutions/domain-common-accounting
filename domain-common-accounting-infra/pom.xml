@@ -4,14 +4,14 @@
     <parent>
         <groupId>io.fireflysoftware</groupId>
         <artifactId>domain-common-accounting</artifactId>
-        <version>26.10.3</version>
+        <version>26.10.4</version>
     </parent>
     <artifactId>domain-common-accounting-infra</artifactId>
     <dependencies>
         <dependency>
             <groupId>io.fireflysoftware</groupId>
             <artifactId>core-common-accounting-gl-sdk</artifactId>
-            <version>26.10.3</version>
+            <version>26.10.4</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
