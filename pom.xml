@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.fireflysoftware</groupId>
+        <artifactId>firefly-parent</artifactId>
+        <version>26.10.3</version>
+        <relativePath/>
+    </parent>
+    <artifactId>domain-common-accounting</artifactId>
+    <version>26.10.3</version>
+    <packaging>pom</packaging>
+    <name>domain-common-accounting</name>
+    <description>General ledger. The sandbox adapter is the default. The live adapter calls the core SDK.</description>
+    <modules>
+        <module>domain-common-accounting-core</module>
+        <module>domain-common-accounting-web</module>
+    </modules>
+    <properties>
+        <java.version>25</java.version>
+        <maven.compiler.release>${java.version}</maven.compiler.release>
+    </properties>
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.fireflysoftware</groupId>
+                <artifactId>domain-common-accounting-core</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.fireflysoftware</groupId>
+                <artifactId>domain-common-accounting-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+</project>
