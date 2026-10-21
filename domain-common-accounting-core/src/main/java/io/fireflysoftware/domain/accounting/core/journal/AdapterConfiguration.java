@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting;
+package io.fireflysoftware.domain.accounting.core.journal;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

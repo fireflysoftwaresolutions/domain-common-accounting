@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Firefly Software Foundation
+ * Copyright 2026 Firefly Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,12 +14,14 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting;
+package io.fireflysoftware.domain.accounting.core.journal.commands;
+
+import io.fireflysoftware.domain.accounting.core.journal.InterestJournal;
+import org.fireflyframework.cqrs.command.Command;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.UUID;
 
-/** A general-ledger journal for interest on one business date. */
-public record InterestJournal(UUID id, LocalDate businessDate, BigDecimal amount, String currency) {
+public record PostInterestCommand(LocalDate businessDate, BigDecimal amount, String currency, String reference)
+        implements Command<InterestJournal> {
 }

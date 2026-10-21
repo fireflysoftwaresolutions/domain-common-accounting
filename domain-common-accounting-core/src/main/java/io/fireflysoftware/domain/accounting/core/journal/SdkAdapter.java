@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting;
+package io.fireflysoftware.domain.accounting.core.journal;
 
 import io.fireflysoftware.core.accounting.invoker.ApiClient;
 import io.fireflysoftware.core.accounting.sdk.api.GlAccountsApi;
@@ -116,6 +116,15 @@ public final class SdkAdapter implements CorePort {
             return Mono.empty();
         }
         return findRemote(businessDate, "LOAN-INTEREST-" + businessDate, null, null);
+    }
+
+    @Override
+    public Mono<Void> removeInterest(UUID journalId) {
+        posted.entrySet().removeIf(entry -> journalId != null && journalId.equals(entry.getValue().id()));
+        if (journalId == null || batches == null) {
+            return Mono.empty();
+        }
+        return batches.delete(journalId, journalId.toString()).then();
     }
 
     private Mono<InterestJournal> findRemote(LocalDate businessDate, String reference, BigDecimal amount, String currency) {

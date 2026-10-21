@@ -16,9 +16,9 @@
 
 package io.fireflysoftware.domain.accounting.web;
 
-import io.fireflysoftware.domain.accounting.CorePort;
-import io.fireflysoftware.domain.accounting.InterestJournal;
-import io.fireflysoftware.domain.accounting.JournalRequest;
+import io.fireflysoftware.domain.accounting.core.journal.CorePort;
+import io.fireflysoftware.domain.accounting.core.journal.InterestJournal;
+import io.fireflysoftware.domain.accounting.core.journal.JournalRequest;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

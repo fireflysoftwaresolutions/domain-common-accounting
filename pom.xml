@@ -16,7 +16,10 @@
     <description>General ledger. The sandbox adapter is the default. The live adapter calls the core SDK.</description>
     <modules>
         <module>domain-common-accounting-core</module>
+        <module>domain-common-accounting-interfaces</module>
         <module>domain-common-accounting-web</module>
+        <module>domain-common-accounting-sdk</module>
+        <module>domain-common-accounting-infra</module>
     </modules>
     <properties>
         <java.version>25</java.version>
@@ -31,7 +34,22 @@
             </dependency>
             <dependency>
                 <groupId>io.fireflysoftware</groupId>
+                <artifactId>domain-common-accounting-interfaces</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.fireflysoftware</groupId>
                 <artifactId>domain-common-accounting-web</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.fireflysoftware</groupId>
+                <artifactId>domain-common-accounting-sdk</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.fireflysoftware</groupId>
+                <artifactId>domain-common-accounting-infra</artifactId>
                 <version>${project.version}</version>
             </dependency>
         </dependencies>

@@ -4,6 +4,10 @@ spring:
 server:
   port: ${SERVER_PORT:18122}
 firefly:
+  eda:
+    enabled: false
+  stepevents:
+    enabled: false
   accounting:
     gl:
       adapter: sandbox

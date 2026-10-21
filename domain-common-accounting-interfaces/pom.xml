@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>io.fireflysoftware</groupId>
+        <artifactId>domain-common-accounting</artifactId>
+        <version>26.10.3</version>
+    </parent>
+    <artifactId>domain-common-accounting-interfaces</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>io.fireflysoftware</groupId>
+            <artifactId>domain-common-accounting-core</artifactId>
+        </dependency>
+    </dependencies>
+</project>

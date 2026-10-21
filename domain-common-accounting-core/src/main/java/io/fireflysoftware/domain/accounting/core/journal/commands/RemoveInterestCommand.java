@@ -1,5 +1,5 @@
 /*
- * Copyright 2025 Firefly Software Foundation
+ * Copyright 2026 Firefly Software Foundation
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting;
+package io.fireflysoftware.domain.accounting.core.journal.commands;
+
+import org.fireflyframework.cqrs.command.Command;
 
 import java.util.UUID;
 
-public record LedgerAccountView(UUID id, String label) {
+public record RemoveInterestCommand(UUID journalId) implements Command<Void> {
 }

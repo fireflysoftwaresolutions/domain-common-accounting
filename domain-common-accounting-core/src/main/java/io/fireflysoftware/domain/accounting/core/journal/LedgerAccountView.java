@@ -14,11 +14,9 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting;
+package io.fireflysoftware.domain.accounting.core.journal;
 
-import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.util.UUID;
 
-/** Request to post loan interest into the general ledger. */
-public record JournalRequest(LocalDate businessDate, BigDecimal amount, String currency, String reference) {
+public record LedgerAccountView(UUID id, String label) {
 }

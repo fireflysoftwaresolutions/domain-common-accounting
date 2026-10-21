@@ -16,8 +16,8 @@
 
 package io.fireflysoftware.domain.accounting.web;
 
-import io.fireflysoftware.domain.accounting.CorePort;
-import io.fireflysoftware.domain.accounting.LedgerAccountView;
+import io.fireflysoftware.domain.accounting.core.journal.CorePort;
+import io.fireflysoftware.domain.accounting.core.journal.LedgerAccountView;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

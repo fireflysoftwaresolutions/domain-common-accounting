@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting;
+package io.fireflysoftware.domain.accounting.core.journal;
 
 import reactor.core.publisher.Mono;
 
@@ -55,6 +55,14 @@ public final class SandboxAdapter implements CorePort {
         InterestJournal created = new InterestJournal(id, businessDate, amount.setScale(2, RoundingMode.HALF_UP), currency);
         InterestJournal raced = journals.putIfAbsent(businessDate, created);
         return Mono.just(raced == null ? created : raced);
+    }
+
+    @Override
+    public Mono<Void> removeInterest(UUID journalId) {
+        if (journalId != null) {
+            journals.entrySet().removeIf(entry -> journalId.equals(entry.getValue().id()));
+        }
+        return Mono.empty();
     }
 
     @Override

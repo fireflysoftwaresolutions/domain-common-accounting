@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting;
+package io.fireflysoftware.domain.accounting.core.journal;
 
 import reactor.core.publisher.Mono;
 
@@ -29,4 +29,6 @@ public interface CorePort {
     Mono<InterestJournal> postInterest(LocalDate businessDate, BigDecimal amount, String currency, String reference);
 
     Mono<InterestJournal> findInterest(LocalDate businessDate);
+
+    Mono<Void> removeInterest(UUID journalId);
 }
