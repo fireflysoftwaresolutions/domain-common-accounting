@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: Domain Accounting API
-  version: 26.10.4
+  version: 26.10.5
 paths:
   /api/v1/journals:
     post:

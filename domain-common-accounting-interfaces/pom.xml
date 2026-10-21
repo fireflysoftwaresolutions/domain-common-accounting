@@ -4,7 +4,7 @@
     <parent>
         <groupId>io.fireflysoftware</groupId>
         <artifactId>domain-common-accounting</artifactId>
-        <version>26.10.4</version>
+        <version>26.10.5</version>
     </parent>
     <artifactId>domain-common-accounting-interfaces</artifactId>
     <name>domain-common-accounting-interfaces</name>
