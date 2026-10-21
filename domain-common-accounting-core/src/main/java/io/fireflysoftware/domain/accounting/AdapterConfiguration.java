@@ -21,6 +21,8 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.UUID;
+
 @Configuration
 public class AdapterConfiguration {
     @Bean
@@ -32,7 +34,9 @@ public class AdapterConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = "firefly.accounting.gl", name = "adapter", havingValue = "core")
     public CorePort corePort(
-            @Value("${firefly.accounting.gl.core-base-url:http://localhost:8080}") String basePath) {
-        return new SdkAdapter(basePath);
+            @Value("${firefly.accounting.gl.core-base-url:http://localhost:8080}") String basePath,
+            @Value("${firefly.accounting.gl.interest-receivable-account:00000000-0000-4000-8000-000000000011}") UUID receivableAccountId,
+            @Value("${firefly.accounting.gl.interest-income-account:00000000-0000-4000-8000-000000000012}") UUID incomeAccountId) {
+        return new SdkAdapter(basePath, receivableAccountId, incomeAccountId);
     }
 }

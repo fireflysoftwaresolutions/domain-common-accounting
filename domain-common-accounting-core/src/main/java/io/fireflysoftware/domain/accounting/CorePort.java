@@ -18,9 +18,15 @@ package io.fireflysoftware.domain.accounting;
 
 import reactor.core.publisher.Mono;
 
+import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.UUID;
 
-/** Reads the core through its SDK when the live adapter is selected. Sandbox does not open a socket. */
+/** Reads the core and posts journals through its SDK when the live adapter is selected. Sandbox does not open a socket. */
 public interface CorePort {
     Mono<LedgerAccountView> read(UUID id);
+
+    Mono<InterestJournal> postInterest(LocalDate businessDate, BigDecimal amount, String currency, String reference);
+
+    Mono<InterestJournal> findInterest(LocalDate businessDate);
 }
