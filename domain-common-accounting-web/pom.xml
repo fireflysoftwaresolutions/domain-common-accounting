@@ -9,6 +9,7 @@
         <version>26.10.4</version>
     </parent>
     <artifactId>domain-common-accounting-web</artifactId>
+    <name>domain-common-accounting-web</name>
     <dependencies>
         <dependency>
             <groupId>io.fireflysoftware</groupId>

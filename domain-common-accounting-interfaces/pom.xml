@@ -7,6 +7,7 @@
         <version>26.10.4</version>
     </parent>
     <artifactId>domain-common-accounting-interfaces</artifactId>
+    <name>domain-common-accounting-interfaces</name>
     <dependencies>
         <dependency>
             <groupId>io.fireflysoftware</groupId>
