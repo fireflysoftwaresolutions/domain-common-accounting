@@ -18,7 +18,7 @@ package io.fireflysoftware.domain.accounting.web;
 
 import io.fireflysoftware.domain.accounting.core.journal.InterestJournal;
 import io.fireflysoftware.domain.accounting.core.journal.JournalRequest;
-import io.fireflysoftware.domain.accounting.core.journal.JournalServiceImpl;
+import io.fireflysoftware.domain.accounting.core.journal.JournalService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,9 +32,9 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/api/v1/journals")
 public class JournalController {
-    private final JournalServiceImpl journals;
+    private final JournalService journals;
 
-    public JournalController(JournalServiceImpl journals) {
+    public JournalController(JournalService journals) {
         this.journals = journals;
     }
 

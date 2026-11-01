@@ -14,7 +14,11 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting.core.journal;
+package io.fireflysoftware.domain.accounting.core.journal.impl;
+
+import io.fireflysoftware.domain.accounting.core.journal.CorePort;
+import io.fireflysoftware.domain.accounting.core.journal.InterestJournal;
+import io.fireflysoftware.domain.accounting.core.journal.LedgerAccountView;
 
 import io.fireflysoftware.core.accounting.invoker.ApiClient;
 import io.fireflysoftware.core.accounting.sdk.api.GlAccountsApi;

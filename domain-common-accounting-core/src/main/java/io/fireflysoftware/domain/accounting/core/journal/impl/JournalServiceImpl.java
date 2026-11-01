@@ -14,7 +14,12 @@
  * limitations under the License.
  */
 
-package io.fireflysoftware.domain.accounting.core.journal;
+package io.fireflysoftware.domain.accounting.core.journal.impl;
+
+import io.fireflysoftware.domain.accounting.core.journal.CorePort;
+import io.fireflysoftware.domain.accounting.core.journal.InterestJournal;
+import io.fireflysoftware.domain.accounting.core.journal.JournalRequest;
+import io.fireflysoftware.domain.accounting.core.journal.JournalService;
 
 import io.fireflysoftware.domain.accounting.core.journal.commands.PostInterestCommand;
 import io.fireflysoftware.domain.accounting.core.journal.workflows.PostInterestSaga;
@@ -27,7 +32,7 @@ import reactor.core.publisher.Mono;
 import java.time.LocalDate;
 
 @Service("journalService")
-public class JournalServiceImpl {
+public class JournalServiceImpl implements JournalService {
     private final SagaEngine engine;
     private final CorePort port;
 
@@ -36,6 +41,7 @@ public class JournalServiceImpl {
         this.port = port;
     }
 
+    @Override
     public Mono<InterestJournal> post(JournalRequest request) {
         StepInputs inputs = StepInputs.builder()
                 .forStepId(PostInterestSaga.STEP, new PostInterestCommand(
@@ -45,6 +51,7 @@ public class JournalServiceImpl {
                 .flatMap(result -> outcome(result));
     }
 
+    @Override
     public Mono<InterestJournal> find(LocalDate businessDate) {
         return port.findInterest(businessDate);
     }
