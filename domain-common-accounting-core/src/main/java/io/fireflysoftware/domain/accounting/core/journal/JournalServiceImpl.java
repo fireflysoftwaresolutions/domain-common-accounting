@@ -26,12 +26,12 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 
-@Service
-public class JournalService {
+@Service("journalService")
+public class JournalServiceImpl {
     private final SagaEngine engine;
     private final CorePort port;
 
-    public JournalService(SagaEngine engine, CorePort port) {
+    public JournalServiceImpl(SagaEngine engine, CorePort port) {
         this.engine = engine;
         this.port = port;
     }

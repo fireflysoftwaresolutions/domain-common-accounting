@@ -26,7 +26,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /** Default adapter. Returns one sample row, posts one journal per business date, and does not call the core. */
-public final class SandboxAdapter implements CorePort {
+public final class SandboxAdapterImpl implements CorePort {
     private final ConcurrentHashMap<LocalDate, InterestJournal> journals = new ConcurrentHashMap<>();
 
     @Override

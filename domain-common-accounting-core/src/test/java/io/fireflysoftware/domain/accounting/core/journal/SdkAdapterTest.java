@@ -48,7 +48,7 @@ class SdkAdapterTest {
                 .withUserConfiguration(AdapterConfiguration.class)
                 .run(context -> {
                     CorePort port = context.getBean(CorePort.class);
-                    assertThat(port).isInstanceOf(SandboxAdapter.class);
+                    assertThat(port).isInstanceOf(SandboxAdapterImpl.class);
                     assertThat(port.read(null).block().label()).isEqualTo("1000");
                 });
     }
@@ -58,7 +58,7 @@ class SdkAdapterTest {
         new ApplicationContextRunner()
                 .withUserConfiguration(AdapterConfiguration.class)
                 .withPropertyValues("firefly.accounting.gl.adapter=core")
-                .run(context -> assertThat(context.getBean(CorePort.class)).isInstanceOf(SdkAdapter.class));
+                .run(context -> assertThat(context.getBean(CorePort.class)).isInstanceOf(SdkAdapterImpl.class));
     }
 
     @Test
@@ -68,14 +68,14 @@ class SdkAdapterTest {
         GlAccountDTO dto = mock(GlAccountDTO.class);
         when(dto.getId()).thenReturn(id);
         when(api.getById3(id, null)).thenReturn(Mono.just(dto));
-        LedgerAccountView view = new SdkAdapter(api).read(id).block();
+        LedgerAccountView view = new SdkAdapterImpl(api).read(id).block();
         assertThat(view.id()).isEqualTo(id);
         verify(api).getById3(id, null);
     }
 
     @Test
     void sandboxJournalIsIdempotentForTheSameBusinessDate() {
-        SandboxAdapter sandbox = new SandboxAdapter();
+        SandboxAdapterImpl sandbox = new SandboxAdapterImpl();
         LocalDate date = LocalDate.of(2026, 10, 21);
         InterestJournal first = sandbox.postInterest(date, new BigDecimal("2.19"), "EUR", "LOAN-INTEREST-2026-10-21").block();
         InterestJournal second = sandbox.postInterest(date, new BigDecimal("2.19"), "EUR", "LOAN-INTEREST-2026-10-21").block();
@@ -106,7 +106,7 @@ class SdkAdapterTest {
         when(entries.create1(any(), any(), any())).thenReturn(Mono.just(entry));
         when(lines.create2(any(), any(), any(), any())).thenReturn(Mono.just(new JournalLineDTO()));
 
-        SdkAdapter adapter = new SdkAdapter(accounts, batches, entries, lines, receivable, income);
+        SdkAdapterImpl adapter = new SdkAdapterImpl(accounts, batches, entries, lines, receivable, income);
         InterestJournal first = adapter.postInterest(date, new BigDecimal("2.19"), "EUR", "LOAN-INTEREST-2026-10-21").block();
         InterestJournal second = adapter.postInterest(date, new BigDecimal("2.19"), "EUR", "LOAN-INTEREST-2026-10-21").block();
 

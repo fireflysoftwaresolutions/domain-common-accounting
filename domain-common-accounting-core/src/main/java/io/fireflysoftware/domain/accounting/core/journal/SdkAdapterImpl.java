@@ -34,7 +34,7 @@ import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
 /** Live adapter. Calls core-common-accounting-gl-sdk. Selected with firefly.accounting.gl.adapter=core. */
-public final class SdkAdapter implements CorePort {
+public final class SdkAdapterImpl implements CorePort {
     private static final UUID DEFAULT_RECEIVABLE = UUID.fromString("00000000-0000-4000-8000-000000000011");
     private static final UUID DEFAULT_INCOME = UUID.fromString("00000000-0000-4000-8000-000000000012");
 
@@ -46,11 +46,11 @@ public final class SdkAdapter implements CorePort {
     private final UUID incomeAccountId;
     private final ConcurrentHashMap<LocalDate, InterestJournal> posted = new ConcurrentHashMap<>();
 
-    public SdkAdapter(String basePath) {
+    public SdkAdapterImpl(String basePath) {
         this(basePath, DEFAULT_RECEIVABLE, DEFAULT_INCOME);
     }
 
-    public SdkAdapter(String basePath, UUID receivableAccountId, UUID incomeAccountId) {
+    public SdkAdapterImpl(String basePath, UUID receivableAccountId, UUID incomeAccountId) {
         ApiClient client = new ApiClient();
         client.setBasePath(basePath);
         this.accounts = new GlAccountsApi(client);
@@ -61,7 +61,7 @@ public final class SdkAdapter implements CorePort {
         this.incomeAccountId = incomeAccountId;
     }
 
-    SdkAdapter(GlAccountsApi accounts) {
+    SdkAdapterImpl(GlAccountsApi accounts) {
         this.accounts = accounts;
         this.batches = null;
         this.entries = null;
@@ -70,7 +70,7 @@ public final class SdkAdapter implements CorePort {
         this.incomeAccountId = DEFAULT_INCOME;
     }
 
-    SdkAdapter(
+    SdkAdapterImpl(
             GlAccountsApi accounts,
             JournalBatchesApi batches,
             JournalEntriesApi entries,
