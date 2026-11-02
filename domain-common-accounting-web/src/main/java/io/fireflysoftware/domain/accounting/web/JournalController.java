@@ -29,6 +29,7 @@ import reactor.core.publisher.Mono;
 
 import java.time.LocalDate;
 
+@io.swagger.v3.oas.annotations.tags.Tag(name="Journals")
 @RestController
 @RequestMapping("/api/v1/journals")
 public class JournalController {
@@ -38,11 +39,13 @@ public class JournalController {
         this.journals = journals;
     }
 
+    @io.swagger.v3.oas.annotations.Operation(operationId="postJournal")
     @PostMapping
     public Mono<InterestJournal> post(@RequestBody JournalRequest request) {
         return journals.post(request);
     }
 
+    @io.swagger.v3.oas.annotations.Operation(operationId="readJournal")
     @GetMapping("/{businessDate}")
     public Mono<InterestJournal> read(@PathVariable LocalDate businessDate) {
         return journals.find(businessDate);

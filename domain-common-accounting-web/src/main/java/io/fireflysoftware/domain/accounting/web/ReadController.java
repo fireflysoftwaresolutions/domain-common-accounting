@@ -26,6 +26,7 @@ import reactor.core.publisher.Mono;
 
 import java.util.UUID;
 
+@io.swagger.v3.oas.annotations.tags.Tag(name="Accounts")
 @RestController
 @RequestMapping("/api/v1/accounts")
 public class ReadController {
@@ -35,6 +36,7 @@ public class ReadController {
         this.port = port;
     }
 
+    @io.swagger.v3.oas.annotations.Operation(operationId="readAccount")
     @GetMapping("/{id}")
     public Mono<LedgerAccountView> read(@PathVariable UUID id) {
         return port.read(id);

@@ -8,7 +8,12 @@ firefly:
     enabled: false
   stepevents:
     enabled: false
+  openapi:
+    instant-scalar:
+      enabled: true
   accounting:
+    managed-posting:
+      enabled: false
     gl:
       adapter: sandbox
       core-base-url: http://localhost:8080

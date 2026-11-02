@@ -12,6 +12,10 @@
     <name>domain-common-accounting-web</name>
     <dependencies>
         <dependency>
+            <groupId>org.fireflyframework</groupId>
+            <artifactId>fireflyframework-web</artifactId>
+        </dependency>
+        <dependency>
             <groupId>io.fireflysoftware</groupId>
             <artifactId>domain-common-accounting-core</artifactId>
         </dependency>
@@ -23,7 +27,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+        <dependency><groupId>org.springdoc</groupId><artifactId>springdoc-openapi-starter-webflux-ui</artifactId></dependency>
+        <dependency><groupId>org.springframework.boot</groupId><artifactId>spring-boot-starter-test</artifactId><scope>test</scope></dependency>
+        <dependency><groupId>com.fasterxml.jackson.dataformat</groupId><artifactId>jackson-dataformat-yaml</artifactId><scope>test</scope></dependency>
     </dependencies>
+    <properties><openapi.gen.skip>false</openapi.gen.skip><openapi.gen.mainClass>io.fireflysoftware.domain.accounting.web.openapi.OpenApiGenApplication</openapi.gen.mainClass></properties>
     <build>
         <plugins>
             <plugin>

@@ -1,0 +1,11 @@
+firefly:
+  accounting:
+    managed-posting:
+      enabled: true
+  openapi:
+    instant-scalar:
+      enabled: true
+springdoc:
+  api-docs:
+    enabled: true
+    version: OPENAPI_3_0
