@@ -19,7 +19,9 @@ package io.fireflysoftware.domain.accounting.web;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication(scanBasePackages = "io.fireflysoftware.domain.accounting")
+@SpringBootApplication(scanBasePackages = "io.fireflysoftware.domain.accounting",
+        excludeName = {"org.springframework.boot.r2dbc.autoconfigure.R2dbcAutoConfiguration",
+                "org.springframework.boot.jdbc.autoconfigure.DataSourceAutoConfiguration"})
 public class DomainApplication {
     public static void main(String[] args) {
         SpringApplication.run(DomainApplication.class, args);
