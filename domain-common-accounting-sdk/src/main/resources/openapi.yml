@@ -1,59 +1,559 @@
-openapi: 3.0.3
+openapi: 3.0.1
 info:
-  title: Domain Accounting API
-  version: 26.10.6
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: ""
+  description: Generated server url
+tags:
+- name: ManagedLedgerJournals
+  description: First supported USD Ledger transfer; exact original action and protected
+    Core recovery
 paths:
+  /api/v1/tenants/{tenantId}/books/{bookId}/ledger-journals/recovery:
+    post:
+      tags:
+      - ManagedLedgerJournals
+      summary: Recover the same original Core journal without posting again
+      description: A missing observation is not an audited no-effect closure or permission
+        to allocate another action.
+      operationId: recoverLedgerJournal
+      parameters:
+      - name: tenantId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ManagedPostingRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManagedPostingResponse"
+        "400":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "401":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "403":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "404":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "409":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "422":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "503":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "4XX":
+          description: Other exact owner current-invocation refusal status; prior
+            financial effects remain unknown
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManagedPostingResponse"
+        default:
+          description: Transport/framework failure; retain the complete original action
+            for protected Core recovery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManagedPostingResponse"
+      security:
+      - accountingDomainBearer: []
+      x-disable-idempotency: true
+  /api/v1/tenants/{tenantId}/books/{bookId}/ledger-journals:
+    post:
+      tags:
+      - ManagedLedgerJournals
+      summary: Submit the exact approved original transfer journal through Domain
+      description: Core independently observes actual current Ledger monetary evidence
+        and approved mapping. Uncertain responses retain the original action and never
+        authorize replacement or automatic compensation.
+      operationId: postLedgerJournal
+      parameters:
+      - name: tenantId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: bookId
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ManagedPostingRequest"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManagedPostingResponse"
+        "400":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "401":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "403":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "404":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "409":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "422":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "503":
+          description: Application pre-dispatch rejection or correlated owner observation;
+            authentication filters can reject before an application body
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: "#/components/schemas/ManagedPostingResponse"
+                - $ref: "#/components/schemas/ManagedPostingPreDispatchError"
+        "4XX":
+          description: Other exact owner current-invocation refusal status; prior
+            financial effects remain unknown
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManagedPostingResponse"
+        default:
+          description: Transport/framework failure; retain the complete original action
+            for protected Core recovery
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ManagedPostingResponse"
+      security:
+      - accountingDomainBearer: []
+      x-disable-idempotency: true
   /api/v1/journals:
     post:
-      tags: [Journals]
+      tags:
+      - Journals
       operationId: postJournal
+      parameters:
+      - name: X-Idempotency-Key
+        in: header
+        description: "Optional retry key for scoped POST, PUT, PATCH, and DELETE response\
+          \ reuse. Safe methods ignore it. Reuse requires configured trusted identity\
+          \ and namespace; changed input returns 409. Business effects require durable\
+          \ application idempotency."
+        required: false
+        schema:
+          type: string
       requestBody:
-        required: true
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/JournalRequest"
+        required: true
       responses:
         "200":
-          description: Journal posted
+          description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/InterestJournal"
   /api/v1/journals/{businessDate}:
     get:
-      tags: [Journals]
+      tags:
+      - Journals
       operationId: readJournal
       parameters:
-        - name: businessDate
-          in: path
-          required: true
-          schema: {type: string, format: date}
+      - name: businessDate
+        in: path
+        required: true
+        schema:
+          type: string
+          format: date
+      - name: X-Idempotency-Key
+        in: header
+        description: "Optional retry key for scoped POST, PUT, PATCH, and DELETE response\
+          \ reuse. Safe methods ignore it. Reuse requires configured trusted identity\
+          \ and namespace; changed input returns 409. Business effects require durable\
+          \ application idempotency."
+        required: false
+        schema:
+          type: string
       responses:
         "200":
-          description: Journal for the business date
+          description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/InterestJournal"
   /api/v1/accounts/{id}:
     get:
-      tags: [Accounts]
+      tags:
+      - Accounts
       operationId: readAccount
       parameters:
-        - name: id
-          in: path
-          required: true
-          schema: {type: string, format: uuid}
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+          format: uuid
+      - name: X-Idempotency-Key
+        in: header
+        description: "Optional retry key for scoped POST, PUT, PATCH, and DELETE response\
+          \ reuse. Safe methods ignore it. Reuse requires configured trusted identity\
+          \ and namespace; changed input returns 409. Business effects require durable\
+          \ application idempotency."
+        required: false
+        schema:
+          type: string
       responses:
         "200":
-          description: Ledger account
+          description: OK
           content:
-            application/json:
+            '*/*':
               schema:
                 $ref: "#/components/schemas/LedgerAccountView"
 components:
   schemas:
+    GlCurrencyReference:
+      required:
+      - currencyId
+      - digest
+      - encodingVersion
+      - isoCode
+      - policyId
+      - version
+      type: object
+      properties:
+        policyId:
+          type: string
+        currencyId:
+          type: string
+        isoCode:
+          type: string
+        version:
+          type: integer
+          format: int64
+        digest:
+          type: string
+        encodingVersion:
+          type: string
+    GlPostingEntry:
+      required:
+      - description
+      - entryKey
+      - lines
+      type: object
+      properties:
+        entryKey:
+          type: string
+        description:
+          type: string
+        lines:
+          type: array
+          items:
+            $ref: "#/components/schemas/GlPostingLine"
+    GlPostingLine:
+      required:
+      - accountId
+      - amountMinor
+      - currency
+      - currencyAdmissionId
+      - expectedAccountVersion
+      - expectedCurrencyVersion
+      - lineKey
+      - memo
+      - postedScale
+      - side
+      type: object
+      properties:
+        lineKey:
+          type: string
+        accountId:
+          type: string
+        expectedAccountVersion:
+          type: integer
+          format: int64
+        currencyAdmissionId:
+          type: string
+        expectedCurrencyVersion:
+          type: integer
+          format: int64
+        currency:
+          $ref: "#/components/schemas/GlCurrencyReference"
+        postedScale:
+          type: integer
+          format: int32
+        side:
+          type: string
+        amountMinor:
+          type: string
+        memo:
+          type: string
+    GlPostingRequest:
+      required:
+      - actionId
+      - businessDate
+      - description
+      - entries
+      - expectedBookVersion
+      - expectedPeriodVersion
+      - mappingDigest
+      - mappingId
+      - mappingVersion
+      - notAfterEpochMillis
+      - periodId
+      - source
+      - sourceOccurrenceEpochMillis
+      type: object
+      properties:
+        actionId:
+          type: string
+        periodId:
+          type: string
+        expectedBookVersion:
+          type: integer
+          format: int64
+        expectedPeriodVersion:
+          type: integer
+          format: int64
+        notAfterEpochMillis:
+          type: integer
+          format: int64
+        businessDate:
+          type: string
+        sourceOccurrenceEpochMillis:
+          type: integer
+          format: int64
+        source:
+          $ref: "#/components/schemas/GlSourceReference"
+        mappingId:
+          type: string
+        mappingVersion:
+          type: integer
+          format: int64
+        mappingDigest:
+          type: string
+        description:
+          type: string
+        entries:
+          type: array
+          items:
+            $ref: "#/components/schemas/GlPostingEntry"
+    GlSourceReference:
+      required:
+      - digest
+      - effectOrdinal
+      - effectReference
+      - eventKind
+      - financialReceiptReference
+      - objectReference
+      - observedAtEpochMillis
+      - owner
+      - provenanceReference
+      - revision
+      type: object
+      properties:
+        owner:
+          type: string
+        objectReference:
+          type: string
+        effectReference:
+          type: string
+        revision:
+          type: integer
+          format: int64
+        digest:
+          type: string
+        eventKind:
+          type: string
+        effectOrdinal:
+          type: integer
+          format: int32
+        financialReceiptReference:
+          type: string
+        provenanceReference:
+          type: string
+        observedAtEpochMillis:
+          type: integer
+          format: int64
+    ManagedPostingRequest:
+      required:
+      - expectedIntentDigest
+      - posting
+      type: object
+      properties:
+        expectedIntentDigest:
+          pattern: "[0-9a-f]{64}"
+          type: string
+        posting:
+          $ref: "#/components/schemas/GlPostingRequest"
+      additionalProperties: false
+    ManagedPostingReceipt:
+      type: object
+      properties:
+        receiptId:
+          type: string
+          format: uuid
+        actionId:
+          type: string
+          format: uuid
+        postingId:
+          type: string
+          format: uuid
+        journalSequence:
+          type: integer
+          format: int64
+        intentDigest:
+          type: string
+        recovered:
+          type: boolean
+        recordedAt:
+          $ref: "#/components/schemas/FireflyInstant"
+      additionalProperties: false
+    ManagedPostingResponse:
+      type: object
+      properties:
+        actionId:
+          type: string
+          format: uuid
+        intentDigest:
+          type: string
+        status:
+          type: string
+          enum:
+          - COMMITTED
+          - OUTCOME_UNKNOWN
+          - COMMITTED_RESPONSE_UNAVAILABLE
+          - CURRENT_INVOCATION_REFUSED
+          - NOT_OBSERVED
+        ownerStatus:
+          type: integer
+          format: int32
+        receipt:
+          $ref: "#/components/schemas/ManagedPostingReceipt"
+      additionalProperties: false
+    ManagedPostingPreDispatchError:
+      type: object
+      properties:
+        status:
+          type: integer
+          format: int32
+        code:
+          type: string
+          enum:
+          - MANAGED_POSTING_PRE_DISPATCH_REJECTED
+        phase:
+          type: string
+          enum:
+          - PRE_DISPATCH
+      additionalProperties: false
     JournalRequest:
       type: object
       properties:
@@ -87,3 +587,11 @@ components:
           format: uuid
         label:
           type: string
+    FireflyInstant:
+      type: string
+      format: date-time
+  securitySchemes:
+    accountingDomainBearer:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

@@ -22,7 +22,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-/** Reads the core and posts journals through its SDK when the live adapter is selected. Sandbox does not open a socket. */
+/** Legacy account-read contract; date-only interest requests cannot establish governed financial effects. */
 public interface CorePort {
     Mono<LedgerAccountView> read(UUID id);
 

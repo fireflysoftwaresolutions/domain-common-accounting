@@ -16,6 +16,9 @@
 
 package io.fireflysoftware.domain.accounting.core.journal;
 
+import io.fireflysoftware.domain.accounting.core.journal.impl.SandboxAdapterImpl;
+import io.fireflysoftware.domain.accounting.core.journal.impl.SdkAdapterImpl;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
@@ -28,7 +31,7 @@ public class AdapterConfiguration {
     @Bean
     @ConditionalOnProperty(prefix = "firefly.accounting.gl", name = "adapter", havingValue = "sandbox", matchIfMissing = true)
     public CorePort sandboxPort() {
-        return new SandboxAdapter();
+        return new SandboxAdapterImpl();
     }
 
     @Bean
@@ -37,6 +40,6 @@ public class AdapterConfiguration {
             @Value("${firefly.accounting.gl.core-base-url:http://localhost:8080}") String basePath,
             @Value("${firefly.accounting.gl.interest-receivable-account:00000000-0000-4000-8000-000000000011}") UUID receivableAccountId,
             @Value("${firefly.accounting.gl.interest-income-account:00000000-0000-4000-8000-000000000012}") UUID incomeAccountId) {
-        return new SdkAdapter(basePath, receivableAccountId, incomeAccountId);
+        return new SdkAdapterImpl(basePath, receivableAccountId, incomeAccountId);
     }
 }

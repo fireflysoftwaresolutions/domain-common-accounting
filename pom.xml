@@ -13,7 +13,7 @@
     <version>26.10.6</version>
     <packaging>pom</packaging>
     <name>domain-common-accounting</name>
-    <description>General ledger. The sandbox adapter is the default. The live adapter calls the core SDK.</description>
+    <description>Governed Ledger-to-GL posting and recovery through generated Core SDKs.</description>
     <modules>
         <module>domain-common-accounting-core</module>
         <module>domain-common-accounting-interfaces</module>
