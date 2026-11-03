@@ -18,7 +18,6 @@ package io.fireflysoftware.domain.accounting.core.journal.workflows;
 
 import io.fireflysoftware.domain.accounting.core.journal.InterestJournal;
 import io.fireflysoftware.domain.accounting.core.journal.commands.PostInterestCommand;
-import io.fireflysoftware.domain.accounting.core.journal.commands.RemoveInterestCommand;
 import org.fireflyframework.cqrs.command.CommandBus;
 import org.fireflyframework.orchestration.core.context.ExecutionContext;
 import org.fireflyframework.orchestration.saga.annotation.Saga;
@@ -27,7 +26,7 @@ import org.fireflyframework.orchestration.saga.annotation.StepEvent;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
 
-/** Posts the interest journal and deletes that batch if a later step fails. */
+/** Retained legacy workflow; a posted journal cannot be compensated by deleting its batch. */
 @Saga(name = PostInterestSaga.NAME)
 @Service
 public class PostInterestSaga {
@@ -52,6 +51,7 @@ public class PostInterestSaga {
         if (created == null || created.id() == null) {
             return Mono.empty();
         }
-        return commandBus.send(new RemoveInterestCommand(created.id()));
+        return Mono.error(new org.springframework.web.server.ResponseStatusException(
+                org.springframework.http.HttpStatus.CONFLICT, "GL_POSTED_JOURNAL_REQUIRES_REVERSAL"));
     }
 }

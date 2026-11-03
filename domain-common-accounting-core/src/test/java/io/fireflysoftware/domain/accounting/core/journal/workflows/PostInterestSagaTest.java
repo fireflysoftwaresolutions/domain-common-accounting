@@ -17,24 +17,17 @@
 package io.fireflysoftware.domain.accounting.core.journal.workflows;
 
 import io.fireflysoftware.domain.accounting.core.journal.InterestJournal;
-import io.fireflysoftware.domain.accounting.core.journal.commands.RemoveInterestCommand;
 import org.fireflyframework.cqrs.command.CommandBus;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.UUID;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class PostInterestSagaTest {
@@ -42,15 +35,14 @@ class PostInterestSagaTest {
     private CommandBus commandBus;
 
     @Test
-    void removeDeletesThePostedBatch() {
+    void postedBatchRequiresAnExplicitReversalInsteadOfDeletion() {
         UUID id = UUID.randomUUID();
-        when(commandBus.send(any(RemoveInterestCommand.class))).thenReturn(Mono.empty());
         InterestJournal created = new InterestJournal(id, LocalDate.of(2026, 10, 21), new BigDecimal("2.19"), "EUR");
 
-        StepVerifier.create(new PostInterestSaga(commandBus).remove(created)).verifyComplete();
-
-        ArgumentCaptor<RemoveInterestCommand> captor = ArgumentCaptor.forClass(RemoveInterestCommand.class);
-        verify(commandBus).send(captor.capture());
-        assertThat(captor.getValue().journalId()).isEqualTo(id);
+        StepVerifier.create(new PostInterestSaga(commandBus).remove(created))
+                .expectErrorMatches(error -> error instanceof org.springframework.web.server.ResponseStatusException refusal
+                        && refusal.getStatusCode().value() == 409)
+                .verify();
+        org.mockito.Mockito.verifyNoInteractions(commandBus);
     }
 }

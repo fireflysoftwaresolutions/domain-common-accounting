@@ -11,6 +11,7 @@ import org.junit.jupiter.api.io.TempDir;
 class OriginalProducerSdkInputFixtureTest {
     @TempDir Path root;
     private Properties setup(byte[] original)throws Exception {
+        root = root.toRealPath();
         var web=root.resolve("domain-common-accounting-web");Files.createDirectories(web.resolve("target/managed-posting-producer"));
         var canonical=root.resolve("domain-common-accounting-sdk/src/main/resources/openapi.yml");Files.createDirectories(canonical.getParent());Files.write(canonical,original);
         var properties=new Properties();properties.setProperty("accounting.domain.fixture.sdk-owned-hosted","true");properties.setProperty("accounting.domain.fixture.gate","a".repeat(64));properties.setProperty("accounting.domain.fixture.sdk-source-root",root.toString());

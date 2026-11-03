@@ -11,14 +11,18 @@ Developed by the Firefly Software Foundation. [dev@fireflysoftware.io](mailto:de
 
 [Website](https://fireflysoftware.io/) · [OpenPlatform](https://fireflysoftware.io/openplatform/) · [Module catalogue](https://fireflysoftware.io/openplatform/modules/)
 
-Reads a general-ledger account from core-common-accounting-gl through core-common-accounting-gl-sdk (`GlAccountsApi.getById3`).
+This domain orchestrates approved Ledger-to-GL posting and original-action recovery through the generated Core GL SDK. Experience clients call the generated Domain SDK; business state remains in Core.
 
-`firefly.accounting.gl.adapter` defaults to `sandbox`. `core` selects the SDK adapter. The sandbox returns one sample account and does not open a socket.
+## Governed posting
 
-## Governed posting runtime
+Enable `firefly.accounting.managed-posting.enabled` only with the required issuer, audience, tenant, policy endpoint and caller-bound OAuth2 registrations configured. The routes under `/api/v1/tenants/{tenantId}/books/{bookId}/ledger-journals` preserve the complete original action and intent. Core independently checks committed Ledger evidence and approved account mapping before writing a balanced journal and immutable audit evidence.
 
-The separate governed journal-posting path delegates through the genuine GL Core SDK. Its original application now includes the managed PostgreSQL technical-cache provider, the standard Spring Boot reactive OAuth2 client auto-configuration, and the YAML provider at runtime. This resolves the observed missing client-registration repository and YAMLFactory startup failures without creating a custom credentials repository.
+An uncertain response does not authorize a new action, automatic retry with a new identity, or deletion. Use `/recovery` with the same complete request. The current admitted flow covers the configured USD Ledger transfer; it does not implement interest accrual, reversal, reconciliation or financial close.
 
-Domain excludes Boot JDBC and R2DBC business datasource auto-configuration. It does not own business tables or a repository template. Configure restricted technical-cache storage separately from Core business databases. Deployment OAuth2 registrations must provide the actual trusted issuer metadata, registered client, token endpoint, scopes and externally supplied secret; current original identity and operation checks remain in force.
+## Legacy routes
 
-The owning source suite passes all14 cases, including original behavior and new Boot registration/discovery and business-persistence boundary checks. The actual original Domain Main reaches authenticated metadata readiness in the six-service PostgreSQL runtime. This establishes source and startup behavior only. Experience→Domain→GL journal posting, restart/recovery and complete accounting acceptance remain separate pending integration gates. The legacy sample-account sandbox described above is not replaced or qualified by this runtime change.
+The historical `sandbox` selector is retained for configuration compatibility, but it no longer invents accounts or stores journals in Domain memory. Unconfigured account reads return `503 GL_OWNER_NOT_CONFIGURED`. The `core` selector retains the original generated account-read SDK path; configuring a URL alone is not authorization to a protected owner.
+
+Date-only interest posting and lookup are rejected: these requests lack a tenant, accounting book, original owner action, current approval and immutable financial-source evidence. A posted journal cannot be deleted as compensation; the legacy adapter rejects removal with `GL_POSTED_JOURNAL_REQUIRES_REVERSAL` without issuing a Core delete. These are explicit rejections of an unsafe legacy contract, not implemented interest or reversal journeys.
+
+Completing interest accounting requires authoritative accrual evidence, governed mapping and approval, atomic owner posting, and a linked reversal operation. Existing ledger-transfer acceptance must not be presented as acceptance of those operations.
